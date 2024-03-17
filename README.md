@@ -1,66 +1,45 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Project Name
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is a personal project in my journey to learn PHP and Laravel. 
+In this project, there are routes that allow users to Register, Authenticate and perfom CRUD operations with images. The images are saved in a AWS S3 bucket.
 
-## About Laravel
+## Technology Stack
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Laravel
+- JWT-Auth
+- AWS S3
+- MySQL (or whatever database you're using)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Routes
+- `POST /users`: Create a user.
+- `POST /login`: Authenticate the user.
+- `POST /image`: Uploads an image to AWS S3 and stores the image URL in the database.
+- `GET /images`: Get all the images.
+- `GET /users/{userId}/images`: Get all the images from a certain user.
+- `GET /image/{imageId}`: Get an image from the database.
+- `DELETE /image/{imageId}`: Deletes an image from the database.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Setup
 
-## Learning Laravel
+1. Clone the repository: `git clone https://github.com/username/repository.git`
+2. Install dependencies: `composer install`
+3. Copy the `.env.example` file to `.env` and fill in your AWS and database credentials.
+4. Run the database migrations: `php artisan migrate`
+5. Start the server: `php artisan serve`
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Usage
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+`POST /users:` To create a new user, make a POST request to /users with the user's information in the request body. The request body should be a FORM URL ENCONDED object with fields for name, email, and password.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+`POST /login`: To authenticate a user, make a POST request to /login with the user's email and password in the request body. The request body should be a FORM URL ENCONDED object with fields for email and password. Then it will return the user Token that is valid for 1 Hour.
 
-## Laravel Sponsors
+`POST /image`: To upload an image, make a POST request to /image with the image file in the image field of the request body. The image file should be sent as MultiPart form data.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+`GET /images`: To get all images, make a GET request to /images. This will return a JSON array of all images.
 
-### Premium Partners
+`GET /users/{userId}/images`: To get all images from a certain user, make a GET request to /users/{userId}/images, replacing {userId} with the ID of the user. This will return a JSON array of all images from the specified user.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+`GET /image/{imageId}`: To get a specific image, make a GET request to /image/{imageId}, replacing {imageId} with the ID of the image. This will return a JSON object with the image's information.
 
-## Contributing
+`DELETE /image/{imageId}`: To delete an image, make a DELETE request to /image/{imageId}, replacing {imageId} with the ID of the image. This will delete the image from the database and return a 204 status code.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
