@@ -33,6 +33,43 @@ class ImageController extends Controller
         return response()->json($createdIMG, 201, [], JSON_UNESCAPED_SLASHES);// used the flag to prevent \/ in the url response
     }
 
+    public function getImages(Request $request)
+    {
+
+        $images = Image::all();
+
+        return response()->json($images, 200, [], JSON_UNESCAPED_SLASHES);// used the flag to prevent \/ in the url response
+    }
+
+    public function getImagesByUserId(Request $request, $userId){
+        $images = Image::where('user_id', $userId)->get();
+
+        return response()->json($images, 200, [], JSON_UNESCAPED_SLASHES);// used the flag to prevent \/ in the url response
+    }
+
+    public function getImageById(Request $request, $imageId){
+        $image = Image::find($imageId);
+
+        return response()->json($image, 200, [], JSON_UNESCAPED_SLASHES);// used the flag to prevent \/ in the url response
+    }
+
+    public function deleteImage(Request $request, $imageId)
+    {
+        $userId = Auth::id();
+        $image = Image::where('id', $imageId)->where('user_id', $userId)->first();
+        if ($image) {
+            $image->delete();
+
+            return response()->json(null, 204);
+        } else {
+            if (Image::where('id', $imageId)->exists()) {
+                return response()->json(['error' => 'U can only delete ur own images'], 401);
+            } else {
+                return response()->json(['error' => 'Image not found'], 404);
+            }
+        }
+    }
+
     private function uploadImage($image)
     {
 
